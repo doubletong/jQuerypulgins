@@ -1,5 +1,4 @@
-(function($) {
-   
+(function($) {   
     
     //index 为默认索引
    $.fn.bbiTab = function(opts){
