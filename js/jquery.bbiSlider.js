@@ -1,3 +1,8 @@
+/*
+Author: Wuya
+Homepage: http://heiniaozhi.cn
+Github: https://github.com/doubletong/jQuerypulgins
+*/
 (function($) {
 
     //index 为默认索引
