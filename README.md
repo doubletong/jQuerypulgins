@@ -1,7 +1,7 @@
 jQuery Plugins
 =============
 
-<h3>plugin: bbiSlider</h3>
+<h3>Plugin: bbiSlider</h3>
 
 <h4>How to Use</h4>
 
