@@ -58,10 +58,19 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+#slider ul.slider-list li a {
+  display: block;
+  width: 100px;
+  height: 100%;
+}
 #slider ul.slider-list li .loading {
   height: 100%;
   width: 100%;
   background: url(../img/loading.gif) no-repeat center center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: auto;
 }
 #slider ul li.active {
   z-index: 0;
