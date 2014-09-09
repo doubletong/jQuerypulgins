@@ -19,7 +19,7 @@ script code:
 ```html
  <script src="js/jquery-2.1.1.min.js"></script>
  <script src="js/jquery.bbiSlider.js"></script>
-     <script>
+ <script>
         $("#slider").bbiSlider();
  </script>
 ```
