@@ -24,7 +24,6 @@ Github: https://github.com/doubletong/jQuerypulgins
        //循环背景
         var interval = setInterval(function(){
           slider.slideSwitch(lis,links);
-             console.log('loop');
         }, options.delay);
 
 
@@ -85,7 +84,7 @@ Github: https://github.com/doubletong/jQuerypulgins
         //图片缓冲
         lis.each(function () {
             var $currli = $(this);
-            $currli.html("<div class='loading'></div>");
+            $currli.append("<div class='loading'></div>");
             var imgurl = $(this).attr("data-pc-img");
             var image = new Image();
             $(image).attr('src', imgurl).load(function () {
@@ -112,7 +111,6 @@ Github: https://github.com/doubletong/jQuerypulgins
                }
                slider.append('<div class="slider-nav">' + navs + '</div>');
                var links = $('.slider-nav a');
-                console.log('init');
                this.chang(0,lis,links);
            },
            chang:function(index,lis,links){  //set slider active
