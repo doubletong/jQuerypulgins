@@ -3,66 +3,75 @@
     //index 为默认索引
    $.fn.bbiSlider = function(opts){
         var defaults = {
-            delay: 3000 // 当前索引
+            delay: 3000, // 当前索引
+            prevNext: true,
+            dotNav: true
         };
         var options = $.extend(defaults, opts);
 
 
        var lis = $(this).find('ul.slider-list li');
 
+       //初始化
+       slider.initialize($(this),lis);
+        var links = $(this).find('div.slider-nav a');
 
        //循环背景
         var interval = setInterval(function(){
           slider.slideSwitch(lis,links);
+             console.log('loop');
         }, options.delay);
 
-       //初始化
-       slider.initialize($(this),lis,links);
 
-       var links = $(this).find('div.slider-nav a');
+       if(options.dotNav){
+            // 幻片导航
+            links.click(function (e) {
+                e.preventDefault();
+                clearInterval(interval); // stop the interval
 
-        // 幻片导航
-        links.click(function (e) {
-            e.preventDefault();
-            clearInterval(interval); // stop the interval
+                var linkIndex = $(this).index();
+                slider.chang(linkIndex,lis,links); //切换图片
 
-            var linkIndex = $(this).index();
-            slider.chang(linkIndex,lis,links); //切换图片
+                interval = setInterval(function(){
+                       slider.slideSwitch(lis,links);
+                    }, options.delay);
 
-            interval = setInterval(function(){
-                   slider.slideSwitch(lis,links);
-                }, options.delay);
+            });
+       }else{
+           links.hide();
+       }
 
-        });
+       if(options.prevNext){
+           //左右导航
+           $(this).children('a.prev,a.next').click(function (e) {
 
-       //左右导航
-       $(this).children('a.prev,a.next').click(function (e) {
+                e.preventDefault();
+                clearInterval(interval); // stop the interval
 
-            e.preventDefault();
-            clearInterval(interval); // stop the interval
+               var dir = $(this).hasClass('prev') ? -1 : 1;
+                // Get the li that is currently visible
+               var current = links.filter('a.active');
 
-           var dir = $(this).hasClass('prev') ? -1 : 1;
-            // Get the li that is currently visible
-           var current = links.filter('a.active');
+               var currentIndex = links.index(current);
+               // Get the element that should be shown next according to direction
+               var newIndex = dir < 0 ? (currentIndex-1) : (currentIndex+1);
 
-           var currentIndex = links.index(current);
-           // Get the element that should be shown next according to direction
-           var newIndex = dir < 0 ? (currentIndex-1) : (currentIndex+1);
+               // If we've reached the end, select first/last depending on direction
+                if(newIndex < 0 || newIndex > (links.length-1)) {
+                    newIndex = dir < 0 ? (links.length-1) : 0;
+                }
 
-           // If we've reached the end, select first/last depending on direction
-            if(newIndex < 0 || newIndex > (links.length-1)) {
-                newIndex = dir < 0 ? (links.length-1) : 0;
-            }
-
-            slider.chang(newIndex,lis,links);
+                slider.chang(newIndex,lis,links);
 
 
-            interval = setInterval(function(){
-                   slider.slideSwitch(lis,links);
-                }, options.delay);
+                interval = setInterval(function(){
+                       slider.slideSwitch(lis,links);
+                    }, options.delay);
 
-        })
-
+            });
+       }else{
+           $(this).children('a.prev,a.next').hide();
+       }
 
 
 
@@ -97,8 +106,8 @@
                    navs += '<a href="#"></a>';
                }
                slider.append('<div class="slider-nav">' + navs + '</div>');
-               var links = $('slider-nav a');
-
+               var links = $('.slider-nav a');
+                console.log('init');
                this.chang(0,lis,links);
            },
            chang:function(index,lis,links){  //set slider active
