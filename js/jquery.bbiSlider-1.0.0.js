@@ -1,4 +1,5 @@
 /*
+Plugin Name: bbiSlider 1.0.0
 Author: Wuya
 Homepage: http://heiniaozhi.cn
 Github: https://github.com/doubletong/jQuerypulgins
