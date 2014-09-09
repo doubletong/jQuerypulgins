@@ -1,7 +1,9 @@
 jQuery Plugins
 =============
 
-jQuery plugins lib
+<h3>plugin: bbiSlider</h3>
+
+<h4>How to Use</h4>
 
 html code:
 ```html
