@@ -1,20 +1,27 @@
 jQuery Plugins
 =============
 
-jQuery plugins lib
+<h3>Plugin: bbiSlider</h3>
+
+<h4>How to Use</h4>
 
 html code:
-<code>
+```html
 <div id="slider">
     <ul class="slider-list">
-        <li data-pc-img="http://www.hongyuehao.com/Content/Uploads/Slides/130537778460034815.jpg"><a href="http://www.hongyuehao.com"></a></li>
-        <li data-pc-img="http://www.hongyuehao.com/Content/Uploads/Slides/130537778218840399.jpg"><a href="http://www.hongyuehao.com"></a></li>
-        <li data-pc-img="http://www.hongyuehao.com/Content/Uploads/Slides/130541309574910048.jpg"><a href="http://www.hongyuehao.com"></a></li>
+        <li data-pc-img="Slides/130537778460034815.jpg"><a href="http://www.google.com"></a></li>
+        <li data-pc-img="Slides/130537778218840399.jpg"><a href="http://www.google.com"></a></li>
+        <li data-pc-img="Slides/130541309574910048.jpg"><a href="http://www.google.com"></a></li>
     </ul>
 </div>
-</code>
+```
 
-script:
-<code>
-$("#slider").bbiSlider();
-</code>
+
+script code:
+```html
+ <script src="js/jquery-2.1.1.min.js"></script>
+ <script src="js/jquery.bbiSlider.js"></script>
+ <script>
+        $("#slider").bbiSlider();
+ </script>
+```
