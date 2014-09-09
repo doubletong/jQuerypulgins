@@ -17,8 +17,8 @@
        
        lis.children("a").hover(function(){
            $(this).closest("li").addClass('active').siblings().removeClass("active");
-            var id = $(this).attr("href");       
-            $(id).show().siblings().hide();           
+           var cindex = $(this).closest("li").index();
+           tabs.eq(cindex).show().siblings().hide();
        }).click(function(e){
             e.preventDefault();
        });     
