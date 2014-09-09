@@ -3,106 +3,73 @@
     //index 为默认索引
    $.fn.bbiSlider = function(opts){
         var defaults = {
-            currentIndex: 1 // 当前索引
+            delay: 3000 // 当前索引
         };
         var options = $.extend(defaults, opts);
+
 
        var lis = $(this).find('ul.slider-list li');
 
 
-    //循环背景
-    var interval = setInterval(function(){
-      slideSwitch();
-    }, 5000);
+       //循环背景
+        var interval = setInterval(function(){
+          slider.slideSwitch(lis,links);
+        }, options.delay);
 
-    $("div.slider-nav a:first").addClass("active");
-    var sid = $("div.slider-nav a.active").attr("data-id");
-    ChangBodyBg(sid);
+       //初始化
+       slider.initialize($(this),lis,links);
 
+       var links = $(this).find('div.slider-nav a');
 
-    $("div.slider-nav a").click(function (e) {
-        e.preventDefault();
-        clearInterval(interval); // stop the interval
-        var sid = $(this).attr("data-id");
-        ChangBodyBg(sid);
-
-        $("div.slider-nav a.active").removeClass("active");
-        $(this).addClass("active");
-
-        interval = setInterval(function(){
-               slideSwitch();
-            }, 5000);
-
-    });
-
-
-       $(this).children('a.prev').click(function (e) {
+        // 幻片导航
+        links.click(function (e) {
             e.preventDefault();
             clearInterval(interval); // stop the interval
 
-           var  currentLink = $("div.slider-nav a.active"),  prevLink = currentLink.prev("a"), lastLink = $("div.slider-nav a:last");
-
-            if (prevLink.length) {
-                currentLink.removeClass("active");
-                prevLink.addClass("active");
-
-            } else {
-                currentLink.removeClass("active");
-                lastLink.addClass("active");
-            }
-            var activeLine = $("div.slider-nav a.active");
-
-            var sid = activeLine.attr("data-id");
-            ChangBodyBg(sid);
+            var linkIndex = $(this).index();
+            slider.chang(linkIndex,lis,links); //切换图片
 
             interval = setInterval(function(){
-                   slideSwitch();
-                }, 5000);
-
-    })
-
-
-       $(this).children('a.next').click(function (e) {
-
-            e.preventDefault();
-
-            clearInterval(interval); // stop the interval
-
-           var  currentLink = $("div.slider-nav a.active"),  nextLink = currentLink.next("a"), firstLink = $("div.slider-nav a:first");
-
-            if (currentLink.next("a").length) {
-                currentLink.removeClass("active");
-                nextLink.addClass("active");
-            } else {
-                currentLink.removeClass("active");
-                firstLink.addClass("active");
-            }
-
-            var activeLine = $("div.slider-nav a.active");
-
-            var sid = activeLine.attr("data-id");
-            ChangBodyBg(sid);
-
-            interval = setInterval(function(){
-               slideSwitch();
-            }, 5000);
+                   slider.slideSwitch(lis,links);
+                }, options.delay);
 
         });
 
+       //左右导航
+       $(this).children('a.prev,a.next').click(function (e) {
+
+            e.preventDefault();
+            clearInterval(interval); // stop the interval
+
+           var dir = $(this).hasClass('prev') ? -1 : 1;
+            // Get the li that is currently visible
+           var current = links.filter('a.active');
+
+           var currentIndex = links.index(current);
+           // Get the element that should be shown next according to direction
+           var newIndex = dir < 0 ? (currentIndex-1) : (currentIndex+1);
+
+           // If we've reached the end, select first/last depending on direction
+            if(newIndex < 0 || newIndex > (links.length-1)) {
+                newIndex = dir < 0 ? (links.length-1) : 0;
+            }
+
+            slider.chang(newIndex,lis,links);
 
 
-        /**
+            interval = setInterval(function(){
+                   slider.slideSwitch(lis,links);
+                }, options.delay);
 
-        *   ON RESIZE, check again
-
-        */
+        })
 
 
-        var pageWidth = $(window).width(), pageHeight = $(window).height();
+
+
+       // var pageWidth = $(window).width(), pageHeight = $(window).height();
 
         //图片缓冲
         lis.each(function () {
-
             var $currli = $(this);
             $currli.html("<div class='loading'></div>");
             var imgurl = $(this).attr("data-pc-img");
@@ -119,40 +86,35 @@
 
    }
 
-   // loop display nav
-        function slideSwitch() {
 
-            var $active = $('div.slider-nav a.active');
-            // var $next = $active.next();
+       var slider = {
+           initialize : function(slider,lis){ //initialize slider
+           var prevNext = '<a href="#" class="prev"><i class="icon-prev"></i></a><a href="#" class="next"><i class="icon-next"></i></a>';
+               slider.append(prevNext);
 
-            if ($active.length == 0) $active = $('div.slider-nav  a:last');
-            var $next = $active.next().length ? $active.next()
-                : $('div.slider-nav a:first');
+               var navs = "";
+               for(var i=0;i<lis.length;i++){
+                   navs += '<a href="#"></a>';
+               }
+               slider.append('<div class="slider-nav">' + navs + '</div>');
+               var links = $('slider-nav a');
 
-            $next.addClass('active');
-            $active.removeClass('active');
-            var sid = $("div.slider-nav a.active").attr("data-id");
+               this.chang(0,lis,links);
+           },
+           chang:function(index,lis,links){  //set slider active
+               lis.eq(index).fadeIn().siblings().fadeOut();
+               links.eq(index).addClass("active").siblings().removeClass("active");
+           },
 
-            ChangBodyBg(sid);
+           slideSwitch:function(lis, links){ //loop display slider
+               var current = links.filter(".active");
+               var currentIndex = links.index(current);
+               var nextIndex = (currentIndex == (links.length-1)) ? 0 : currentIndex + 1
 
-        }
+               this.chang(nextIndex, lis, links);
 
-
-        function ChangBodyBg(sid) {
-            $("ul.slider-list li.active").fadeIn('slow', function () {
-                $(this).fadeOut('slow');
-                $(this).removeClass("active");
-
-            });
-            // $("#slider li#" + sid).addClass('active');
-            $("ul.slider-list li#" + sid).fadeOut('slow', function () {
-                $(this).fadeIn('slow');
-                $(this).addClass("active");
-            });
-
-          //  $("a.slider-link").attr("href", url);
-
-        }
+           }
+       }
 
 
 })(jQuery);

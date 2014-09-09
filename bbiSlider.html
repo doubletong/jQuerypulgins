@@ -10,31 +10,18 @@
 
     <!-- slider start -->
 <div id="slider">
-
     <ul class="slider-list">
-        <li id="s0" data-pc-img="http://www.hongyuehao.com/Content/Uploads/Slides/130537778460034815.jpg"><a href="http://www.hongyuehao.com"></a></li>
-        <li id="s1" data-pc-img="http://www.hongyuehao.com/Content/Uploads/Slides/130537778218840399.jpg"><a href="http://www.hongyuehao.com"></a></li>
-        <li id="s2" data-pc-img="http://www.hongyuehao.com/Content/Uploads/Slides/130541309574910048.jpg"><a href="http://www.hongyuehao.com"></a></li>
+        <li data-pc-img="http://www.hongyuehao.com/Content/Uploads/Slides/130537778460034815.jpg"><a href="http://www.hongyuehao.com"></a></li>
+        <li data-pc-img="http://www.hongyuehao.com/Content/Uploads/Slides/130537778218840399.jpg"><a href="http://www.hongyuehao.com"></a></li>
+        <li data-pc-img="http://www.hongyuehao.com/Content/Uploads/Slides/130541309574910048.jpg"><a href="http://www.hongyuehao.com"></a></li>
     </ul>
-
-
- <a href="#" class="prev"><i class="flaticon-previous11"></i></a>
- <a href="#" class="next"><i class="flaticon-next15"></i></a>
-
-
- <div class="slider-nav">
-                 <a href="#" data-id="s0"></a>
-                 <a href="#" data-id="s1"></a>
-                 <a href="#" data-id="s2"></a>
- </div>
-
 </div>
 <!-- slider end -->
 
      <script src="js/jquery-2.1.1.min.js"></script>
      <script src="js/jquery.bbiSlider.js"></script>
      <script>
-        $("#slider").bbiSlider();
+        $("#slider").bbiSlider({delay:5000});
     </script>
 </body>
 </html>
