@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>满屏滚动页面</title>
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <style>
+    body{
+        overflow:hidden;
+    }
+    </style>
+</head>
+<body>
+   <div id="container">
+       <section style="background-color:red;">
+           1
+       </section>
+       <section style="background-color:yellow;">
+           2
+       </section>
+       <section style="background-color:green;">
+           3
+       </section>
+   </div>
+
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/jquery.mousewheel.min.js"></script>
+    <script>
+
+
+
+        $(function(){
+
+            var pages =  $('#container>section');
+
+            scrollSection.pageResize(pages);
+
+            $(window).on('resize', function(){
+                scrollSection.pageResize(pages);
+            });
+
+
+            $('#container').on('mousewheel', function(event) {
+                event.preventDefault();
+               // console.log(event.deltaX, event.deltaY, event.deltaFactor);
+                scrollSection.scrollPage(event.deltaY,pages);
+            });
+        });
+
+        var scrollSection = {};
+        scrollSection.pageResize = function(pages){
+            var winHeight = $(window).height();
+           // var pages =  $('#container>section');
+            pages.height(winHeight);
+            pages.eq(0).addClass('active');
+        }
+
+        scrollSection.scrollPage = function(deltaY,pages){
+            if(deltaY==1){
+               // alert('down');
+
+            }else{
+               // alert('up');
+               // pages.filter('.active').next().addClass('active').siblings().removeClass('active');
+               var nextIndex = pages.filter('.active').index();
+               pages.eq(nextIndex+1).addClass('active').siblings().removeClass('active');
+
+               var scrolltop = pages.filter('.active').offset().top;
+               console.log(scrolltop);
+
+               $('html, body').animate({scrollTop: scrolltop}, 500, 'easeInExpo', function () {});
+            }
+
+        }
+
+
+    </script>
+</body>
+</html>
