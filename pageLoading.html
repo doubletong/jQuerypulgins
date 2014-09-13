@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <img src="http://placehold.it/495x471">
+    <img src="http://placehold.it/409x356">
+    <img src="http://placehold.it/420x251">
+    <img src="http://placehold.it/494x344">
+    <img src="http://placehold.it/423x403">
+    <img src="http://placehold.it/423x434">
+    <img src="http://placehold.it/495x471">
+    <img src="http://placehold.it/409x356">
+    <img src="http://placehold.it/420x251">
+    <img src="http://placehold.it/494x344">
+    <img src="http://placehold.it/423x403">
+    <img src="http://placehold.it/423x434">
+
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script>
+     $(function(){
+         var allel = $('body *');
+         var len = allel.length;
+         console.log(len);
+         var count = 0;
+         allel.each(function(){
+
+           $(this).load(function(){
+                 count +=1;
+                 var pren = count/len * 100;
+                 console.log(pren);
+             });
+         });
+
+
+
+
+     });
+    </script>
+</body>
+</html>

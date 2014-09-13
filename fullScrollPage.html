@@ -21,6 +21,12 @@
        <section style="background-color:green;">
            3
        </section>
+       <section style="background-color:#666;">
+           4
+       </section>
+       <section style="background-color:blue;">
+           4
+       </section>
    </div>
 
     <script src="js/jquery-2.1.1.min.js"></script>
@@ -48,7 +54,9 @@
             });
         });
 
+        var wc = 0;
         var scrollSection = {};
+
         scrollSection.pageResize = function(pages){
             var winHeight = $(window).height();
            // var pages =  $('#container>section');
@@ -57,21 +65,38 @@
         }
 
         scrollSection.scrollPage = function(deltaY,pages){
-            if(deltaY==1){
-               // alert('down');
+            wc += deltaY;
 
-            }else{
+            var currentIndex = pages.filter('.active').index();
+            if(wc==2){
                // alert('up');
-               // pages.filter('.active').next().addClass('active').siblings().removeClass('active');
-               var nextIndex = pages.filter('.active').index();
-               pages.eq(nextIndex+1).addClass('active').siblings().removeClass('active');
+               var prevIndex = currentIndex - 1;
 
-               var scrolltop = pages.filter('.active').offset().top;
-               console.log(scrolltop);
+               if(prevIndex >= 0){
+                   scrollSection.upDownpage(pages,prevIndex);
 
-               $('html, body').animate({scrollTop: scrolltop}, 500, 'easeInExpo', function () {});
+               }
+               wc=0;
             }
 
+            if(wc==-2){
+               // alert('down');
+               // pages.filter('.active').next().addClass('active').siblings().removeClass('active');
+               var nextIndex = currentIndex + 1;
+
+               if(nextIndex < pages.length){
+                  scrollSection.upDownpage(pages,nextIndex);
+
+               }
+                wc=0;
+            }
+
+        }
+        scrollSection.upDownpage = function(pages,index){
+                   var gotoPage = pages.eq(index)
+                   gotoPage.addClass('active').siblings().removeClass('active');
+                   var scrolltop = gotoPage.offset().top;
+                   $('html, body').animate({scrollTop: scrolltop}, 600, 'easeInExpo', function () {});
         }
 
 
