@@ -8,9 +8,24 @@
     body{
         overflow:hidden;
     }
+        #menu{position: fixed;left: 10%;top: 40%;}
+     #menu   a{
+         display: block;height: 12px;width: 12px;margin-bottom: 8px;border: 5px #eee solid;
+        }
+        #menu   a.active{
+            background-color: #eee;
+        }
     </style>
+    <script src="js/modernizr-2.6.2.min.js"></script>
 </head>
 <body>
+  <nav id="menu" role="navigation">
+      <a href="#"></a>
+      <a href="#"></a>
+      <a href="#"></a>
+      <a href="#"></a>
+      <a href="#"></a>
+  </nav>
    <div id="container">
        <section style="background-color:red;">
            1
@@ -25,11 +40,11 @@
            4
        </section>
        <section style="background-color:blue;">
-           4
+           5
        </section>
    </div>
 
-    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/jquery-1.11.0.min.js"></script>
     <script src="js/jquery.easing.min.js"></script>
     <script src="js/jquery.mousewheel.min.js"></script>
     <script>
@@ -38,33 +53,35 @@
 
         $(function(){
 
-            var pages =  $('#container>section');
+            var pages =  $('#container>section'),navs = $('#menu a');
 
-            scrollSection.pageResize(pages);
+
+            scrollSection.pageResize(pages,navs); //初始化
 
             $(window).on('resize', function(){
-                scrollSection.pageResize(pages);
+                scrollSection.pageResize(pages,navs);
             });
-
 
             $('#container').on('mousewheel', function(event) {
                 event.preventDefault();
                // console.log(event.deltaX, event.deltaY, event.deltaFactor);
-                scrollSection.scrollPage(event.deltaY,pages);
+                scrollSection.scrollPage(event.deltaY,pages,navs);  //滚动页面事件
             });
         });
 
         var wc = 0;
         var scrollSection = {};
 
-        scrollSection.pageResize = function(pages){
+        scrollSection.pageResize = function(pages,navs){
             var winHeight = $(window).height();
            // var pages =  $('#container>section');
             pages.height(winHeight);
-            pages.eq(0).addClass('active');
+           // pages.eq(0).addClass('active');
+           // navs.eq(0).addClass('active');
+            scrollSection.upDownpage(pages,navs,0);
         }
 
-        scrollSection.scrollPage = function(deltaY,pages){
+        scrollSection.scrollPage = function(deltaY,pages,navs){
             wc += deltaY;
 
             var currentIndex = pages.filter('.active').index();
@@ -73,7 +90,7 @@
                var prevIndex = currentIndex - 1;
 
                if(prevIndex >= 0){
-                   scrollSection.upDownpage(pages,prevIndex);
+                   scrollSection.upDownpage(pages,navs,prevIndex);
 
                }
                wc=0;
@@ -85,18 +102,22 @@
                var nextIndex = currentIndex + 1;
 
                if(nextIndex < pages.length){
-                  scrollSection.upDownpage(pages,nextIndex);
+                  scrollSection.upDownpage(pages,navs,nextIndex);
 
                }
                 wc=0;
             }
 
         }
-        scrollSection.upDownpage = function(pages,index){
+        scrollSection.upDownpage = function(pages,navs,index){  //执行滚动操作
                    var gotoPage = pages.eq(index)
                    gotoPage.addClass('active').siblings().removeClass('active');
                    var scrolltop = gotoPage.offset().top;
-                   $('html, body').animate({scrollTop: scrolltop}, 600, 'easeInExpo', function () {});
+
+                   $('html, body').animate({scrollTop: scrolltop}, 600, 'easeInExpo', function () {
+                      navs.eq(index).addClass('active').siblings().removeClass('active');
+                      // alert(index);
+                   });
         }
 
 
