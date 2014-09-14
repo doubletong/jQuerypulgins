@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <img src="img/130537778218840399.jpg">
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script>
+    $(function(){
+    $(window).on('mousemove',function(e){
+        var winwidth = $(window).width()/2;
+        var px = e.pageX;
+        var mv = (winwidth-px)*40/winwidth;
+        $('img').css({'marginLeft':+mv});
+
+
+        var winheight = $(window).height()/2;
+        var py = e.pageY;
+        var mv = (winheight-py)*40/winheight;
+        $('img').css({'marginTop':+mv});
+
+    //console.log(pos);
+
+    });
+
+    });
+    </script>
+</body>
+</html>
