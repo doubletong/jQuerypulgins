@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    #photo{
+        position: absolute;
+    }
+    </style>
+</head>
+<body>
+    <img id="photo" class="myClass" src="http://placehold.it/80x50">
+
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/TweenMax.min.js"></script>
+    <script>
+
+       // var photo = document.getElementById("photo"); //or use jQuery's $("#photo")
+        var photo =  $("#photo");
+       // TweenLite.to(photo, 1.5, {width:200});
+       // TweenLite.to("#photo", 2, {backgroundColor:"#ff0000", width:"50%", top:"100px", ease:Power2.easeInOut});
+       // TweenLite.to(".myClass", 2, {boxShadow:"0px 0px 20px red", color:"#FC0"});
+       // TweenLite.from(photo, 1.5, {scaleX:0, scaleY:0});
+       // TweenLite.fromTo(photo, 1.5, {width:0, height:0}, {width:100, height:200});
+      //  TweenLite.to(photo, 1.5, {width:100, delay:2});
+       // TweenLite.to(photo, 1.5, {width:100, delay:0.5, onComplete:myFunction});
+      //  function myFunction() {
+      //      console.log("tween finished");
+      //  }
+        TweenLite.to(photo, 3, {css:{scaleX:2, rotation:30}, ease:Power3.easeOut});
+
+    </script>
+</body>
+</html>
